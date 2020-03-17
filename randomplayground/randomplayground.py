@@ -4,7 +4,7 @@ author: https://github.com/PyOctoCat
 date: 3/16/2020
 """
 
-# Work on Random stuff as public info?
+# Reference material
 # https://faker.readthedocs.io/en/master/
 # https://pypi.org/project/googletrans/
 import random
