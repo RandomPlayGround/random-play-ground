@@ -7,7 +7,7 @@ requirements = ["Faker>=4", "StringGenerator>=0", "termcolor>=1"]
 
 setup(
     name="randomplayground",
-    version="0.0.2",
+    version="0.0.3",
     author="@PyOctoCat",
     author_email="davidinco@gmail.com",
     description="A package to help with random generator methods",

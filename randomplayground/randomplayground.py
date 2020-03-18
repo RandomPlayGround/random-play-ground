@@ -10,10 +10,10 @@ date: 3/18/2020
 import random
 import time
 from faker import Faker
-from faker.providers import BaseProvider
-from googletrans import Translator
+# from faker.providers import BaseProvider
+# from googletrans import Translator
 from strgen import StringGenerator
-import re
+# import re
 import sys
 from termcolor import colored
 
