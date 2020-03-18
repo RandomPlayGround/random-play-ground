@@ -73,8 +73,15 @@ class RandomPlayGround:
         """
         Pick a random item from a list until source list is empty and then start over again.
         Supply a tuple to keep the list immutable so list can be repopulated.
+        If a percentage string is supplied calculate value and convert to integer.
         :return:  random item
         """
+        # Allow for a percentage value to be supplied
+        if '%' in str(length):
+            length = round(float(source_list.__len__()) * float(length.strip('%')) / 100.0)
+            # Assume at least one was requested
+            if length == 0:
+                length = 1
 
         # Using tuple to keep the list immutable
         if type(source_list) is tuple:
@@ -192,12 +199,18 @@ class RandomPlayGround:
     def choose_from_list(from_list, length=None, unique=True, **args):
         """
         Pick a random item from a list.
-        Should add repackage to have exhaustive random function
+        Supply none, integer or a percentage value
         unique: to True to make sure you don't get the same item twice
         length: None means no restrictions or all
         :return:  random item
         """
         # rnd_domains = fake.random_elements(elements=(domain_list), length=None, unique=True)
+        # If number length is percent return that amount
+        if '%' in str(length):
+            length = round(float(from_list.__len__()) * float(length.strip('%')) / 100.0)
+            # Assume at least one was requested
+            if length == 0:
+                length = 1
         fake = Faker("en_US")
         return fake.random_elements(elements=from_list, length=length, unique=unique)
 
@@ -268,14 +281,13 @@ if __name__ == '__main__':
         play.progress_bar()
         time.sleep(.05)
     select = RandomPlayGround()
-    _test_list = tuple(['a', 'b', 'c'])
+    test_list = ['a', 'b', 'c']
     print('')
     for i in range(7):
-        print("Exhaustive:", select.exhaustive_random(_test_list, length=1))
+        print("Exhaustive:", select.exhaustive_random(tuple(test_list), length=1))
     print('Fake WWN:', RandomPlayGround.makeup_wwn())
     print('Regexp gen:',  RandomPlayGround.rex_gen('[a-zA-Z0-9 _]{8-16}'))
     print('Rnd Decimal:', RandomPlayGround.choose_number(minimum=13.3, maximum=99.0))
-    test_list = ['a', 'b', 'c']
     print('Choose from:', test_list, ':', RandomPlayGround.choose_from_list(test_list)[0])
     print('Random real word:', RandomPlayGround.word_gen(RandomPlayGround.choose_number(minimum=3, maximum=13)))
 
