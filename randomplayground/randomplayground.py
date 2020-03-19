@@ -18,47 +18,6 @@ import sys
 from termcolor import colored
 
 
-class Progress:
-    """
-    Define methods for progress indicators.
-    ex: play = progress()
-        play.wheel()
-    """
-    def __init__(self, max_bar=100):
-        """
-        Vars that need to be available each time a method is called again
-        """
-        self.tick = 0           # For spinning wheel
-        self.bar = 0            # For progress bar
-        self.max_bar = max_bar  # Max meter for progress bar
-
-    def wheel(self):
-        """
-        Print spinning wheel in place forever.
-        Idea inspired from: https://gist.github.com/mikkkee/73cf05969a97e806dea6
-        :return: none
-        """
-        tock = '|/-\\|/-\\'
-        if self.tick == 8:
-            self.tick = 0
-        sys.stdout.write('\r{}'.format(tock[self.tick]))
-        self.tick += 1
-        sys.stdout.flush()
-
-    def progress_bar(self, bar_color='blue'):
-        """
-        Print progress bar on screen. When hardcoded value of 100 is set new line and start again
-        :return: none
-        """
-        sys.stdout.write('\r{:02d}: {}'.format(self.bar, colored('#', bar_color, attrs=['bold']) * int((self.bar / 2))))
-        if self.bar == self.max_bar:
-            self.bar = 0
-            sys.stdout.write('\n')
-            sys.stdout.flush()
-        sys.stdout.flush()
-        self.bar += 1
-
-
 class RandomPlayGround:
     """
     Define methods for random creation and selection functions.
@@ -271,15 +230,15 @@ class RandomPlayGround:
 
 if __name__ == '__main__':
     print('\nSelf Tests:')
-    play = Progress(max_bar=30)
-    print('Spinning Wheel:')
-    for i in range(16):
-        play.wheel()
-        time.sleep(.1)
-    print('\nProgress bar:')
-    for i in range(100):
-        play.progress_bar()
-        time.sleep(.05)
+    # play = Progress(max_bar=30)
+    # print('Spinning Wheel:')
+    # for i in range(16):
+    #     play.wheel()
+    #     time.sleep(.1)
+    # print('\nProgress bar:')
+    # for i in range(100):
+    #     play.progress_bar()
+    #     time.sleep(.05)
     select = RandomPlayGround()
     test_list = ['a', 'b', 'c']
     print('')
