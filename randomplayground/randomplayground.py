@@ -1,6 +1,7 @@
 """
 My random playground
 author: https://github.com/PyOctoCat
+history: 5/14/2020 - PyOctoCat - update args and kwarks
 date: 3/18/2020
 """
 
@@ -28,7 +29,7 @@ class RandomPlayGround:
         """
         self.used_list = []
 
-    def exhaustive_random(self, source_list, length=1, **args):
+    def exhaustive_random(self, source_list, length=1, *args):
         """
         Pick a random item from a list until source list is empty and then start over again.
         Supply a tuple to keep the list immutable so list can be repopulated.
@@ -139,7 +140,7 @@ class RandomPlayGround:
         return rex_word
 
     @staticmethod
-    def choose_number(minimum=0, maximum=1, **args):
+    def choose_number(minimum=0, maximum=1, *args):
         """
         Pick a random number between these numbers, defaults to boolean test
         Have the numbers the same type for minimum and maximum
@@ -155,7 +156,7 @@ class RandomPlayGround:
             return round(random.uniform(minimum, maximum), decimals)
 
     @staticmethod
-    def choose_from_list(from_list, length=None, unique=True, **args):
+    def choose_from_list(from_list, length=None, unique=True, *args):
         """
         Pick a random item from a list.
         Supply none, integer or a percentage value
@@ -174,7 +175,7 @@ class RandomPlayGround:
         return fake.random_elements(elements=from_list, length=length, unique=unique)
 
     @staticmethod
-    def randomize_list(from_this, **args):
+    def randomize_list(from_this, *args):
         """
         Randomize sequence sent to it.
         Right now just randomizing list
@@ -188,7 +189,7 @@ class RandomPlayGround:
             return from_this
 
     @staticmethod
-    def word_gen(word_size, word_lang='en_US', camelcase=True, **args):
+    def word_gen(word_size, word_lang='en_US', camelcase=True, **kwargs):
         """
         Generate a random word that is funner than just random letters
         :return:  random word
