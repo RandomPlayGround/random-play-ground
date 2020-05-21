@@ -11,9 +11,9 @@ date: 3/18/2020
 import random
 import time
 from faker import Faker
+from strgen import StringGenerator
 # from faker.providers import BaseProvider
 # from googletrans import Translator
-from strgen import StringGenerator
 # import re
 import sys
 from termcolor import colored
@@ -21,7 +21,7 @@ from termcolor import colored
 
 class RandomPlayGround:
     """
-    Define methods for random creation and selection functions.
+    Define methods for random creation and selection functions
     """
     def __init__(self):
         """
@@ -230,24 +230,24 @@ class RandomPlayGround:
 
 
 if __name__ == '__main__':
-    print('\nSelf Tests:')
-    # play = Progress(max_bar=30)
-    # print('Spinning Wheel:')
-    # for i in range(16):
-    #     play.wheel()
-    #     time.sleep(.1)
-    # print('\nProgress bar:')
-    # for i in range(100):
-    #     play.progress_bar()
-    #     time.sleep(.05)
+    print('\n[[ Self Tests ]]')
+    play = Progress(max_bar=30)
+    print('Spinning Wheel:')
+    for i in range(16):
+        play.wheel()
+        time.sleep(.1)
+    print('\nProgress bar:')
+    for i in range(100):
+        play.progress_bar()
+        time.sleep(.05)
     select = RandomPlayGround()
     test_list = ['a', 'b', 'c']
-    print('')
+    print('List:', test_list)
     for i in range(7):
         print("Exhaustive:", select.exhaustive_random(tuple(test_list), length=1))
     print('Fake WWN:', RandomPlayGround.makeup_wwn())
-    print('Regexp gen:',  RandomPlayGround.rex_gen('[a-zA-Z0-9 _]{8-16}'))
-    print('Rnd Decimal:', RandomPlayGround.choose_number(minimum=13.3, maximum=99.0))
+    print('Regexp gen([a-zA-Z0-9 _]{8-16}):',  RandomPlayGround.rex_gen('[a-zA-Z0-9 _]{8-16}'))
+    print('Rnd Decimal(13.3-99):', RandomPlayGround.choose_number(minimum=13.3, maximum=99.0))
     print('Choose from:', test_list, ':', RandomPlayGround.choose_from_list(test_list)[0])
     print('Random real word:', RandomPlayGround.word_gen(RandomPlayGround.choose_number(minimum=3, maximum=13)))
 
