@@ -23,11 +23,15 @@ class RandomPlayGround:
     """
     Define methods for random creation and selection functions
     """
-    def __init__(self):
+    def __init__(self, max_bar=100):
         """
         Vars that need to be available each time a method is called again
         """
+        self.tick = 0           # For spinning wheel
+        self.bar = 0            # For progress bar
+        self.max_bar = max_bar  # Max meter for progress bar
         self.used_list = []
+        # Call this with source list to populate what to draw from
 
     def exhaustive_random(self, source_list, length=1, *args):
         """
@@ -228,20 +232,47 @@ class RandomPlayGround:
         # print('Return', fake_word)
         return str(fake_word)
 
+    def progress_bar(self, bar_color='blue'):
+        """
+        Print progress bar on screen. When hardcoded value of 100 is set new line and start again
+        :return: none
+        """
+        sys.stdout.write('\r{:02d}: {}'.format(self.bar, colored('#', bar_color, attrs=['bold']) * int((self.bar / 2))))
+        if self.bar == self.max_bar:
+            self.bar = 0
+            sys.stdout.write('\n')
+            sys.stdout.flush()
+        sys.stdout.flush()
+        self.bar += 1
+
+    def wheel(self):
+        """
+        Print spinning wheel in place forever.
+        Idea inspired from: https://gist.github.com/mikkkee/73cf05969a97e806dea6
+        :return: none
+        """
+        tock = '|/-\\|/-\\'
+        if self.tick == 8:
+            self.tick = 0
+        sys.stdout.write('\r{}'.format(tock[self.tick]))
+        self.tick += 1
+        sys.stdout.flush()
+
 
 if __name__ == '__main__':
     print('\n[[ Self Tests ]]')
-    play = Progress(max_bar=30)
+    select = RandomPlayGround(max_bar=30)
     print('Spinning Wheel:')
     for i in range(16):
-        play.wheel()
+        select.wheel()
         time.sleep(.1)
-    print('\nProgress bar:')
-    for i in range(100):
-        play.progress_bar()
+    print('\nProgress bar(75):')
+    for i in range(75+1):
+        select.progress_bar()
         time.sleep(.05)
     select = RandomPlayGround()
     test_list = ['a', 'b', 'c']
+    print('\n')
     print('List:', test_list)
     for i in range(7):
         print("Exhaustive:", select.exhaustive_random(tuple(test_list), length=1))
