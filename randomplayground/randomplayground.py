@@ -30,53 +30,7 @@ class RandomPlayGround:
         self.tick = 0           # For spinning wheel
         self.bar = 0            # For progress bar
         self.max_bar = max_bar  # Max meter for progress bar
-        self.used_list = []
-        # Call this with source list to populate what to draw from
-
-    def exhaustive_random(self, source_list, length=1, *args):
-        """
-        Pick a random item from a list until source list is empty and then start over again.
-        Supply a tuple to keep the list immutable so list can be repopulated.
-        If a percentage string is supplied calculate value and convert to integer.
-        :return:  random item
-        """
-        # Allow for a percentage value to be supplied
-        if '%' in str(length):
-            length = round(float(source_list.__len__()) * float(length.strip('%')) / 100.0)
-            # Assume at least one was requested
-            if length == 0:
-                length = 1
-
-        # Using tuple to keep the list immutable
-        if type(source_list) is tuple:
-            source_list = list(source_list)
-        else:
-            print('Please supply the list as a tuple to keep it immutable, not a "{}"\n'.format(type(source_list)))
-            quit()
-
-        if source_list.__len__() < length:
-            print('Length requested of \'{}\' exceeded length of source list({})'.format(length, source_list.__len__()))
-            quit()
-
-        # Pick items requested
-        the_chosen = []
-        for item in range(length):
-            # See if used list needs filling
-            if not self.used_list:
-                if not source_list:
-                    print('Please supply a list element, this looks empty!', source_list)
-                    quit()
-                # print('filling up again', source_list)
-                self.used_list = source_list
-
-            # Add to items to be returned
-            one_item = RandomPlayGround.choose_from_list(self.used_list, length=1)[0]
-            the_chosen.append(one_item)
-
-            # Remove from used up list
-            self.used_list.remove(one_item)
-
-        return the_chosen
+        self.used_list = []     # Call this with source list to populate what to draw from
 
     @staticmethod
     def makeup_wwn(wwn_method=None, *args):
@@ -232,6 +186,51 @@ class RandomPlayGround:
         # print('Return', fake_word)
         return str(fake_word)
 
+    def exhaustive_random(self, source_list, length=1, *args):
+        """
+        Pick a random item from a list until source list is empty and then start over again.
+        Supply a tuple to keep the list immutable so list can be repopulated.
+        If a percentage string is supplied calculate value and convert to integer.
+        :return:  random item
+        """
+        # Allow for a percentage value to be supplied
+        if '%' in str(length):
+            length = round(float(source_list.__len__()) * float(length.strip('%')) / 100.0)
+            # Assume at least one was requested
+            if length == 0:
+                length = 1
+
+        # Using tuple to keep the list immutable
+        if type(source_list) is tuple:
+            source_list = list(source_list)
+        else:
+            print('Please supply the list as a tuple to keep it immutable, not a "{}"\n'.format(type(source_list)))
+            quit()
+
+        if source_list.__len__() < length:
+            print('Length requested of \'{}\' exceeded length of source list({})'.format(length, source_list.__len__()))
+            quit()
+
+        # Pick items requested
+        the_chosen = []
+        for item in range(length):
+            # See if used list needs filling
+            if not self.used_list:
+                if not source_list:
+                    print('Please supply a list element, this looks empty!', source_list)
+                    quit()
+                # print('filling up again', source_list)
+                self.used_list = source_list
+
+            # Add to items to be returned
+            one_item = RandomPlayGround.choose_from_list(self.used_list, length=1)[0]
+            the_chosen.append(one_item)
+
+            # Remove from used up list
+            self.used_list.remove(one_item)
+
+        return the_chosen
+
     def progress_bar(self, bar_color='blue'):
         """
         Print progress bar on screen. When hardcoded value of 100 is set new line and start again
@@ -277,7 +276,9 @@ if __name__ == '__main__':
     for i in range(7):
         print("Exhaustive:", select.exhaustive_random(tuple(test_list), length=1))
     print('Fake WWN:', RandomPlayGround.makeup_wwn())
-    print('Regexp gen([a-zA-Z0-9 _]{8-16}):',  RandomPlayGround.rex_gen('[a-zA-Z0-9 _]{8-16}'))
+    # Supports everything, but the backslash character in this range
+    # https://github.com/paul-wolf/strgen/issues/13
+    print('Regexp gen([a-zA-Z0-9 _]{8-16}):',  RandomPlayGround.rex_gen(r'[\\a-zA-Z0-9 ~`!@#\$%^\&\*\(\)-_=+\[\{\}\];:"\'\|,<.>/?]{8-16}'))
     print('Rnd Decimal(13.3-99):', RandomPlayGround.choose_number(minimum=13.3, maximum=99.0))
     print('Choose from:', test_list, ':', RandomPlayGround.choose_from_list(test_list)[0])
     print('Random real word:', RandomPlayGround.word_gen(RandomPlayGround.choose_number(minimum=3, maximum=13)))
