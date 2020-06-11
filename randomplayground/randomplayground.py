@@ -276,9 +276,9 @@ if __name__ == '__main__':
     for i in range(7):
         print("Exhaustive:", select.exhaustive_random(tuple(test_list), length=1))
     print('Fake WWN:', RandomPlayGround.makeup_wwn())
-    # Supports everything, but the backslash character in this range
-    # https://github.com/paul-wolf/strgen/issues/13
-    print('Regexp gen([a-zA-Z0-9 _]{8-16}):',  RandomPlayGround.rex_gen(r'[\\a-zA-Z0-9 ~`!@#\$%^\&\*\(\)-_=+\[\{\}\];:"\'\|,<.>/?]{8-16}'))
+    # Have at least 0.3.4 to support backslash defect
+    # https://github.com/paul-wolf/strgen/
+    print('Regexp gen([a-zA-Z0-9 _]{8-16}):',  RandomPlayGround.rex_gen(r'[a-zA-Z0-9 ~`!@#\$%^\&\*\(\)-_=+\[\{\}\];:"\'\|\\,<.>/?]{8-16}'))
     print('Rnd Decimal(13.3-99):', RandomPlayGround.choose_number(minimum=13.3, maximum=99.0))
     print('Choose from:', test_list, ':', RandomPlayGround.choose_from_list(test_list)[0])
     print('Random real word:', RandomPlayGround.word_gen(RandomPlayGround.choose_number(minimum=3, maximum=13)))
